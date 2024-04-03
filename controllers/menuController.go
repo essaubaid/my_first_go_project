@@ -154,7 +154,7 @@ func UpdateMenu() gin.HandlerFunc {
 		}
 		updateObj["start_date"] = menu.Start_date
 		updateObj["end_date"] = menu.End_date
-		updateObj["update_at"] = menu.Updated_at
+		updateObj["updated_at"] = menu.Updated_at
 
 		upsert := true
 

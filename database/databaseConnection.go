@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
@@ -13,7 +14,13 @@ import (
 func DBInstance() *mongo.Client {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	client, err := mongo.Connect(ctx, options.Client().ApplyURI("mongodb://localhost:27017"))
+	print("Username is: " + os.Getenv("DB_USERNAME"))
+	client, err := mongo.Connect(ctx, options.Client().ApplyURI(
+		fmt.Sprintf("mongodb+srv://%s:%s@thirfty.kzge54i.mongodb.net/?retryWrites=true&w=majority&appName=THIRFTY",
+			os.Getenv("DB_USERNAME"),
+			os.Getenv("DB_PASSWORD"),
+		),
+	))
 
 	if err != nil {
 		log.Fatal(err)
