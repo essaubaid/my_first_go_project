@@ -26,7 +26,7 @@ func toFixed(num float64, precision int) float64 {
 	return float64(round(num*output)) / output
 }
 
-var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "menu")
+var foodCollection *mongo.Collection = database.OpenCollection(database.Client, "food")
 
 func GetFoods() gin.HandlerFunc {
 	return func(c *gin.Context) {
