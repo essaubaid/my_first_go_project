@@ -18,6 +18,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	routes.MenuRouter(router)
+	routes.OrderRoutes(router)
 	// router.Use(middleware.Authentication())
 
 	router.Run(":" + port)
