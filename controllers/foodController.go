@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/essaubaid/my_first_go_project/database"
+	"github.com/essaubaid/my_first_go_project/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -86,6 +87,7 @@ func GetFoods() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{
 				"error": "error occurred while listing food items",
 			})
+			return
 		}
 
 		var allFoods []bson.M
@@ -94,5 +96,26 @@ func GetFoods() gin.HandlerFunc {
 		}
 		c.JSON(http.StatusOK, allFoods[0])
 
+	}
+}
+
+func GetFood() gin.HandlerFunc {
+	return func(c *gin.Context) {
+		ctx, cancel := context.WithTimeout(context.Background(), 100*time.Second)
+		defer cancel()
+
+		foodId := c.Param("food_id")
+		var food models.Food
+
+		if err := foodCollection.FindOne(
+			ctx, bson.M{"food_id": foodId},
+		).Decode(&food); err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": "error occurred while fetching the food item",
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, food)
 	}
 }
