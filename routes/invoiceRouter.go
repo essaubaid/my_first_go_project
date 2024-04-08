@@ -1,10 +1,13 @@
 package routes
 
-import "github.com/gin-gonic/gin"
+import (
+	"github.com/essaubaid/my_first_go_project/controllers"
+	"github.com/gin-gonic/gin"
+)
 
-func InvoiceRouter(incomingRoutes *gin.Engine) {
-	incomingRoutes.GET("/invoices")
-	incomingRoutes.GET("/invoice/:invoice_id")
-	incomingRoutes.POST("/invoices")
-	incomingRoutes.PATCH("/invoices/:invoice_id")
+func InvoiceRoutes(incomingRoutes *gin.Engine) {
+	incomingRoutes.GET("/invoices", controllers.GetInvoices())
+	incomingRoutes.GET("/invoice/:invoice_id", controllers.GetInvoice())
+	incomingRoutes.POST("/invoice", controllers.CreateInvoice())
+	incomingRoutes.PATCH("/invoice/:invoice_id", controllers.UpdateInvoice())
 }
