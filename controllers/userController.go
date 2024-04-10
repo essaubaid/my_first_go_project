@@ -8,6 +8,7 @@ import (
 	"time"
 
 	"github.com/essaubaid/my_first_go_project/database"
+	"github.com/essaubaid/my_first_go_project/helpers"
 	"github.com/essaubaid/my_first_go_project/models"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
@@ -153,6 +154,20 @@ func SignUp() gin.HandlerFunc {
 		user.ID = primitive.NewObjectID()
 		user.User_id = user.ID.Hex()
 
+		token, refreshToken, _ := helpers.GenerateAllTokens(*user.Email, *user.First_name, *user.Last_name, user.User_id)
+		user.Token = &token
+		user.Refresh_Token = &refreshToken
+
+		result, insertErr := userCollection.InsertOne(ctx, user)
+		if insertErr != nil {
+			msg := "User item was not created"
+			c.JSON(http.StatusInternalServerError, gin.H{
+				"error": msg,
+			})
+			return
+		}
+
+		c.JSON(http.StatusOK, result)
 	}
 }
 
