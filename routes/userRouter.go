@@ -1,12 +1,13 @@
 package routes
 
 import (
+	"github.com/essaubaid/my_first_go_project/controllers"
 	"github.com/gin-gonic/gin"
 )
 
-func UserRouter(incomingRoutes *gin.Engine) {
-	incomingRoutes.GET("/users")
-	incomingRoutes.GET("/users/:user_id")
-	incomingRoutes.POST("/users/signUp")
-	incomingRoutes.POST("/users/login")
+func UserRoutes(incomingRoutes *gin.Engine) {
+	incomingRoutes.GET("/users", controllers.GetUsers())
+	incomingRoutes.GET("/users/:user_id", controllers.GetUser())
+	incomingRoutes.POST("/users/signup", controllers.SignUp())
+	incomingRoutes.POST("/users/login", controllers.Login())
 }
