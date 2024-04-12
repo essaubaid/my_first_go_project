@@ -45,6 +45,7 @@ func GetFoods() gin.HandlerFunc {
 		}
 
 		startIndex := (page - 1) * recordPerPage
+		// Have not used it
 		// startIndex, _ = strconv.Atoi(c.Query("startIndex"))
 
 		matchStage := bson.D{
