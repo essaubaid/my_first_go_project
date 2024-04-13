@@ -14,7 +14,7 @@ import (
 func DBInstance() *mongo.Client {
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
-	print("Username is: " + os.Getenv("DB_USERNAME"))
+
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(
 		fmt.Sprintf("mongodb+srv://%s:%s@thirfty.kzge54i.mongodb.net/?retryWrites=true&w=majority&appName=THIRFTY",
 			os.Getenv("DB_USERNAME"),
