@@ -7,6 +7,7 @@ import (
 )
 
 func TestGenerateAllTokens(t *testing.T) {
+	// This isn't working
 	email := "test@example.com"
 	firstName := "John"
 	lastName := "Doe"
