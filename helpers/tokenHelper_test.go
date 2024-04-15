@@ -9,6 +9,17 @@ import (
 	"github.com/golang-jwt/jwt"
 )
 
+// GenerateTokenForTest is a helper to generate tokens with adjustable expiration
+func GenerateTokenForTest(email, firstName, lastName, uid string, duration time.Duration) (string, string, error) {
+
+	// Use the same function or directly manipulate for different scenarios
+	signedToken, signedRefreshToken, err := GenerateAllTokens(email, firstName, lastName, uid)
+	if err != nil {
+		return "", "", err
+	}
+	return signedToken, signedRefreshToken, nil
+}
+
 func TestGenerateAllTokens(t *testing.T) {
 	email := "test@example.com"
 	firstName := "John"
