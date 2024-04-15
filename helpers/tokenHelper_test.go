@@ -62,3 +62,20 @@ func TestGenerateAllTokens(t *testing.T) {
 		t.Errorf("Expected token expiration to be %v, got %v", expectedExpiry, claims.StandardClaims.ExpiresAt)
 	}
 }
+
+func TestValidateToken(t *testing.T) {
+	email := "test@example.com"
+	firstName := "John"
+	lastName := "Doe"
+	uid := "123456"
+
+	token, _, err := GenerateAllTokens(email, firstName, lastName, uid)
+	if err != nil {
+		t.Fatalf("Failed to generate valid token: %v", err)
+	}
+
+	claim, msg := ValidateToken(token)
+	if claim == nil || msg != "" {
+		t.Errorf("ValidateToken failed for valid token: got nil claims or non-empty msg")
+	}
+}
