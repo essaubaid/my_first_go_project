@@ -74,8 +74,17 @@ func TestValidateToken(t *testing.T) {
 		t.Fatalf("Failed to generate valid token: %v", err)
 	}
 
-	claim, msg := ValidateToken(token)
-	if claim == nil || msg != "" {
+	claims, msg := ValidateToken(token)
+	if msg != "" {
 		t.Errorf("ValidateToken failed for valid token: got nil claims or non-empty msg")
+	}
+
+	if claims.Email != email || claims.First_name != firstName || claims.Last_name != lastName || claims.Uid != uid {
+		t.Error("Claims do not match the input parameters")
+	}
+
+	expectedExpiry := time.Now().Local().Add(time.Hour * 24).Unix()
+	if claims.StandardClaims.ExpiresAt != expectedExpiry {
+		t.Errorf("Expected token expiration to be %v, got %v", expectedExpiry, claims.StandardClaims.ExpiresAt)
 	}
 }
